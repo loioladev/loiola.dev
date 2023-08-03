@@ -3,14 +3,14 @@ import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import Head from '../components/Head.astro';
 
-import "/src/styles/main.css"
+import "/src/styles/global.css"
 
 const { title = 'Matheus Loiola'} = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<Head {title} />
+	<Head title={title} />
 	<body>
 		<Navigation />
 		<slot />
