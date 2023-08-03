@@ -1,9 +1,25 @@
 ---
+import { Icon } from "astro-icon";
+import Link from "./Link.astro";
+import navData from "../data/navData";
 ---
-<div class="nav-links">
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/projects">Projects</a>
-    <a href="/blog">Blog</a>
-    <a href="/contact">Contact</a>
-</div>
+
+<nav aria-label="Primary">
+  <div class="navbar">
+    <a href="/" class="logomark">
+      <Icon name="logomark" width="40" />
+    </a>
+    <ul>
+      {
+        navData.map((item) => (
+          <Link
+            href={item.path}
+            text={item.name}
+            style="primary"
+            isFilled={false}
+          />
+        ))
+      }
+    </ul>
+  </div>
+</nav>
