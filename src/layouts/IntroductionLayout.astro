@@ -1,0 +1,18 @@
+---
+export interface LayoutProps {
+	title: string;
+}
+
+const { title = 'Matheus Loiola' } = Astro.props as LayoutProps;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="">
+	<MainHead>
+	</MainHead>
+	<body>
+		<main>
+			<slot />
+		</main>
+	</body>
+</html>

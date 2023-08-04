@@ -1,8 +1,19 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import MainLayout from '../layouts/MainLayout.astro';
 ---
 
-<BaseLayout>
-	<h1>Work in progress</h1>
-	<p>Page not ready yet</p>
-</BaseLayout>
+<MainLayout title="Home">
+	<div
+    class="container"
+    style={{
+      display: "grid",
+      placeItems: "center",
+      textAlign: "center",
+      gap: "var(--space-sm)",
+    }}
+  >
+  <h1 class="h1">Work in progress</h1>
+  <p>Check CSES page!</p>
+  </div>
+
+</MainLayout>

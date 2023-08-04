@@ -1,0 +1,22 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ProblemCard from "../../components/ProblemCard.astro";
+const allProblems = await Astro.glob("./problems/*.md");
+---
+
+<MainLayout title="CSES">
+  <section class="container" aria-label="New Blog Posts">
+    <h1 class="h1">Problems from CSES</h1>
+      <div class="card-container">
+          {
+            allProblems.map((problem) => (
+              <ProblemCard
+                tagType="h2"
+                frontmatter={problem.frontmatter}
+                url={problem.url}
+              />
+            ))
+          }
+      </div>
+  </section>
+</MainLayout>

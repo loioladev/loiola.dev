@@ -1,0 +1,35 @@
+---
+import { slugify, formatDate } from "../data/utils";
+import { Image } from "@astrojs/image/components";
+import Link from "./Link.astro";
+
+const { frontmatter, url, tagType } = Astro.props;
+const { title, pubDate, tag, image, description } = frontmatter;
+const Tag = tagType;
+---
+
+<article class="card">
+  <small>
+    <a href=`/category/${slugify(tag)}` class="badge">{tag}</a>
+  </small>
+  <a href={url} aria-hidden="true" tabindex="-1">
+    <Image
+      src={image.src}
+      alt={image.alt}
+      width={600}
+      height={250}
+      format="webp"
+      fit="cover"
+      quality={80}
+      aspectRatio="3:1"
+    />
+  </a>
+  <div class="content">
+    <Tag class="h3" href={url}>{title}</Tag>
+    <div>
+      <small>Written on {formatDate(pubDate)}</small>
+    </div>
+    <p>{description}</p>
+    <Link href={url} text="Read more" style="secondary" />
+  </div>
+</article>
