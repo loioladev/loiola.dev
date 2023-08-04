@@ -13,7 +13,9 @@ const { title = 'Matheus Loiola'} = Astro.props;
 	<Head title={title} />
 	<body>
 		<Navigation />
-		<slot />
+		<main>
+			<slot />
+		</main>
 		<Footer />
 	</body>
 </html>

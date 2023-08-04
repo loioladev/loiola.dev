@@ -1,2 +1,19 @@
 ---
+import MainLayout from "./MainLayout.astro";
+import { slugify, formatDate } from "../data/utils";
+import { Image } from "@astrojs/image/components";
+import CsesPostHeader from "../components/CsesPostHeader.astro";
+
+const { frontmatter } = Astro.props;
+
+const { title, description, pubDate, tag, image } = frontmatter;
 ---
+
+<MainLayout {title} {description}>
+  <CsesPostHeader {title} {pubDate} {tag} {image} />
+  <div class="post-content">
+    <div class="content">
+      <slot />
+    </div>
+  </div>
+</MainLayout>

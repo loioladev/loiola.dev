@@ -4,10 +4,6 @@ const navData = [
         path: "/about/"
     },
     {
-        name: "Projects",
-        path: "/projects/"
-    },
-    {
         name: "CSES",
         path: "/cses/"
     },

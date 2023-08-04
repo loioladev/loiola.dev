@@ -47,11 +47,11 @@ h6 {
   --accent--dark: var(--_hue) 50% 50%;
   --muted--dark: var(--_hue) 20% 2%;
 
-  --bkg: var(--bkg--light);
-  --txt: var(--txt--light);
-  --accent: var(--accent--light);
-  --muted: var(--muted--light);
-  color-scheme: light;
+  --bkg: var(--bkg--dark);
+  --txt: var(--txt--dark);
+  --accent: var(--accent--dark);
+  --muted: var(--muted--dark);
+  color-scheme: dark;
 
   /* dynamic spacing adapted from utopia.fyi */
   --space-2xs: clamp(0.31rem, calc(0.18rem + 0.65vw), 0.69rem);
@@ -236,7 +236,7 @@ small {
 
 a,
 button {
-  color: hsl(var(--txt));
+  color: hsl(var(--accent));
   border-radius: var(--radius-sm);
   transition:
     opacity var(--transition-ease-fast),
@@ -244,7 +244,7 @@ button {
     box-shadow var(--transition-squish-slow);
 
   &:hover {
-    color: hsl(var(--accent));
+    color: orange;
   }
 
   &:focus {
@@ -254,7 +254,7 @@ button {
   &:focus-visible {
     box-shadow:
       0 0 0 .2em hsl(var(--bkg)),
-      0 0 0 .4em hsl(var(--accent));
+      0 0 0 .4em hsl(var(--dark));
   }
 }
 
@@ -300,7 +300,7 @@ button {
   }
 
   &.filled {
-    --fill: var(--type);
+    --fill: orange;
     color: hsl(var(--bkg));
   }
 
@@ -317,6 +317,13 @@ button {
   }
 }
 
+a:visited {
+  color: orange;
+}
+
+a:hover {
+  opacity: .8;
+}
 
 ::selection {
   background: hsl(var(--accent) / .85);
@@ -388,7 +395,6 @@ button {
       }
 
       & a {
-        display: flex;
         align-items: center;
         gap: 5px;
         text-decoration: none;
@@ -447,7 +453,7 @@ button {
 
 .badge {
   padding: 4px 10px;
-  background-color: hsl(var(--accent));
+  background-color: rgb(237, 154, 0);
   border-radius: var(--radius-sm);
   color: hsl(var(--muted));
   text-decoration: none;
@@ -466,15 +472,62 @@ button {
       0 0 0 .2em hsl(var(--bkg)),
       0 0 0 .4em hsl(var(--accent));
   }
+
+  &:visited {
+    color: hsl(var(--muted));
+  }
 }
 
 /* cards */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg); 
+  margin-block: var(--space-md);
+  & div {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  & .sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    margin-block-start: var(--space-md);
+
+    @media --md {
+      margin:0;
+    }
+
+    & aside {
+      display: grid;
+      gap: var(--space-2xs);
+      padding: 0;
+
+      @media --sm {
+        flex: 1 1 40%;
+      }
+
+      @media --md {
+      text-align: left;
+      justify-content: start;
+      justify-items: start;
+        & .categories {
+          justify-content: start;
+        }
+      }
+    }
+  }
+}
+
 .card {
   display: grid;
   background-color: hsl(var(--muted));
   padding: var(--space-md);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+  width: 100%;
 
   & .badge {
     --accent: var(--txt);
@@ -535,7 +588,7 @@ header {
     flex-wrap: wrap;
     align-items: flex-start;
     gap: var(--space-lg);
-    margin-block-start: var(--space-xl);
+    margin-block-start: var(--space-md);
 
     @media --md {
       margin:0;
