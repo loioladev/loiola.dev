@@ -7,11 +7,12 @@ const allProblems = await Astro.glob("./problems/*.md");
 <MainLayout title="CSES">
   <section class="container" aria-label="New Blog Posts">
     <h1 class="h1">Problems from CSES</h1>
+      <p>My accepted solutions from the CSES dataset and a explanation to them. For more undocumented problems or complete solutions, check out my <a href="https://github.com/loioladev/competitive-programming/tree/main/CSES">repository</a> in github!</p>
       <div class="card-container">
           {
             allProblems.map((problem) => (
               <ProblemCard
-                tagType="h2"
+                tagType="h3"
                 frontmatter={problem.frontmatter}
                 url={problem.url}
               />

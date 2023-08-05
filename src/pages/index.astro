@@ -1,9 +1,10 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from "../layouts/MainLayout.astro";
+import { Icon } from "astro-icon";
 ---
 
 <MainLayout title="Home">
-	<div
+  <div
     class="container"
     style={{
       display: "grid",
@@ -12,8 +13,34 @@ import MainLayout from '../layouts/MainLayout.astro';
       gap: "var(--space-sm)",
     }}
   >
-  <h1 class="h1">Work in progress</h1>
-  <p>Check CSES page!</p>
+    <h1 class="h1" style="color:orange">loioladev</h1>
+    <h1 class="h3">Welcome to my experimental website!</h1>
+    <p>
+      I am a Computer Scientist who loves to explore new languages and
+      frameworks! I also solve many competitive problems, and I am trying to
+      master the CSES dataset. Check out my website's CSES page for some
+      solutions!
+    </p>
   </div>
-
+  <div
+    class="container"
+    style={{
+      display: "grid",
+      placeItems: "center",
+      gap: "var(--space-sm)",
+    }}
+  >
+    <h1 class="h3">Here are my socials!</h1>
+    <div style={{ display: "flex", gap: "var(--space-sm)" }}>
+      <a href="https://github.com/loioladev" style="color: inherit" target="_blank">
+        <Icon name="github" size="2x" />
+      </a>
+      <a href="https://www.linkedin.com/in/loioladev/" target="_blank">
+        <Icon name="linkedin" size="2x" />
+      </a>
+      <a href="https://codeforces.com/profile/MatheusLoiola" target="_blank" style="color: inherit">
+        <Icon name="codeforces" size="2x" />
+      </a>
+    </div>
+  </div>
 </MainLayout>
