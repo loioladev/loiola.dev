@@ -6,10 +6,6 @@ const navData = [
     {
         name: "CSES",
         path: "/cses/"
-    },
-    {
-        name: "Blog",
-        path: "/blog/"
     }
 ]
 

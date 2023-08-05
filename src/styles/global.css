@@ -319,6 +319,10 @@ a:visited {
   color: orange;
 }
 
+a:unvisited {
+  color: orange;
+}
+
 a:hover {
   opacity: .8;
 }
