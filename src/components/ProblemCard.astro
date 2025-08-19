@@ -1,6 +1,5 @@
 ---
 import { slugify, formatDate } from "../data/utils";
-import { Image } from "@astrojs/image/components";
 import Link from "./Link.astro";
 
 const { frontmatter, url, tagType } = Astro.props;
@@ -10,18 +9,17 @@ const Tag = tagType;
 
 <article class="card">
   <small>
-    <a href=`/category/${slugify(tag)}` class="badge">{tag}</a>
+    <a href={"/category/" + slugify(tag)} class="badge">{tag}</a>
   </small>
   <a href={url} aria-hidden="true" tabindex="-1">
-    <Image
+    <img
       src={image.src}
       alt={image.alt}
-      width={600}
-      height={250}
-      format="webp"
-      fit="cover"
-      quality={80}
-      aspectRatio="3:1"
+      width="600"
+      height="250"
+      style="object-fit: cover; aspect-ratio: 3 / 1; width: 100%; height: auto;"
+      loading="lazy"
+      decoding="async"
     />
   </a>
   <div class="content">

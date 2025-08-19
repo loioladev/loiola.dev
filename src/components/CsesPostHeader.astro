@@ -1,6 +1,5 @@
 ---
 import { slugify, formatDate } from "../data/utils";
-import { Image } from "@astrojs/image/components";
 
 const { title, pubDate, tag, image } = Astro.props;
 ---
@@ -8,20 +7,18 @@ const { title, pubDate, tag, image } = Astro.props;
 <header>
   <div class="container">
     <small>
-      <a href=`/category/${slugify(tag)}` class="badge">{tag}</a>
+      <a href={"/category/" + slugify(tag)} class="badge">{tag}</a>
     </small>
   </div>
   <h1 class="h2">{title}</h1>
   <p>Written on {formatDate(pubDate)}</p>
-  <Image
+  <img
     src={image.src}
     alt={image.alt}
-    width={1200}
-    height={400}
-    format="avif"
-    fit="cover"
-    quality={80}
-    aspectRatio="5:2"
+    width="1200"
+    height="400"
     class="hero-image"
+    loading="eager"
+    style="object-fit: cover; aspect-ratio: 5 / 2; width: 100%; height: auto;"
   />
 </header>
