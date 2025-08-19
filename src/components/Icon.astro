@@ -1,0 +1,17 @@
+---
+interface Props {
+  name: 'github' | 'linkedin' | 'codeforces' | 'logomark';
+  width?: number | string;
+  height?: number | string;
+  size?: string; // e.g., '2x'
+}
+const { name, width, height, size } = Astro.props as Props;
+
+const sizePx = size === '2x' ? 32 : undefined;
+const w = width ?? sizePx ?? 24;
+const h = height ?? sizePx ?? 24;
+---
+{name === 'github' && (<img src="/icons/github.svg" alt="GitHub" width={w} height={h} loading="lazy" decoding="async" />)}
+{name === 'linkedin' && (<img src="/icons/linkedin.svg" alt="LinkedIn" width={w} height={h} loading="lazy" decoding="async" />)}
+{name === 'codeforces' && (<img src="/icons/codeforces.svg" alt="Codeforces" width={w} height={h} loading="lazy" decoding="async" />)}
+{name === 'logomark' && (<img src="/icons/logomark.svg" alt="Logo" width={w} height={h} loading="lazy" decoding="async" />)}
