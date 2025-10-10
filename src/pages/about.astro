@@ -1,0 +1,264 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About">
+  <div class="about-container">
+      
+      <h1>About Me</h1>
+      <div class="banner-image">
+        <img src="/banner.jpg" alt="About banner" />
+      </div>
+
+    <section class="about-section">
+      <p class="intro-text">
+        I'm Matheus Loiola, a Machine Learning Engineer with a passion for healthcare technology 
+        and building innovative solutions. I specialize in Python development, AI/ML applications, 
+        and creating systems that make a real impact on people's lives.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>Education</h2>
+      <div class="education-item">
+        <h3>Bachelor's in Computer Science</h3>
+        <p class="institution">University Name (2019 - 2023)</p>
+        <ul>
+          <li>Focus on Machine Learning and Data Science</li>
+          <li>Relevant coursework: Deep Learning, Computer Vision, Natural Language Processing</li>
+          <li>GPA: 3.8/4.0</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>Programming Languages</h3>
+          <p>Python, JavaScript, TypeScript, SQL, Java</p>
+        </div>
+        <div class="skill-category">
+          <h3>ML/AI Technologies</h3>
+          <p>TensorFlow, PyTorch, Scikit-learn, Keras, OpenCV, NLTK</p>
+        </div>
+        <div class="skill-category">
+          <h3>Web Technologies</h3>
+          <p>React, Node.js, Astro, FastAPI, Flask, REST APIs</p>
+        </div>
+        <div class="skill-category">
+          <h3>Tools & Platforms</h3>
+          <p>Docker, Git, GitHub, AWS, Google Cloud, Jupyter, VS Code</p>
+        </div>
+        <div class="skill-category">
+          <h3>Data & Databases</h3>
+          <p>PostgreSQL, MongoDB, Redis, Pandas, NumPy, Matplotlib</p>
+        </div>
+        <div class="skill-category">
+          <h3>Other Skills</h3>
+          <p>CI/CD, Agile/Scrum, Test-Driven Development, API Design</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Contact</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <strong>Email:</strong> 
+          <a href="mailto:matheus@example.com">matheus@example.com</a>
+        </div>
+        <div class="contact-item">
+          <strong>Location:</strong> City, Country
+        </div>
+        <div class="contact-links">
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">Twitter</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .about-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem 2rem 2rem;
+    }
+
+    .banner-image {
+      width: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 1.0rem;
+      border: 2px solid #e5e5e5;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .banner-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 15 / 3;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 2rem;
+    }
+
+    .about-section {
+      margin-bottom: 3rem;
+    }
+
+    .about-section h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+
+    .intro-text {
+      line-height: 1.8;
+      color: #333;
+      text-align: justify;
+    }
+
+    .education-item {
+      background-color: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .education-item h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+    }
+
+    .institution {
+      color: #666;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .education-item ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      color: #333;
+    }
+
+    .education-item li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .skill-category {
+      background-color: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .skill-category h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-category p {
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .contact-info {
+      background-color: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    .contact-item {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .contact-item strong {
+      color: #1a1a1a;
+      margin-right: 0.5rem;
+    }
+
+    .contact-item a {
+      color: #0066cc;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover {
+      color: #0052a3;
+      text-decoration: underline;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    .contact-links a {
+      color: #666;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-links a:hover {
+      color: #0066cc;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        padding: 1rem;
+      }
+
+      .banner-image {
+        margin-bottom: 1.5rem;
+        border-width: 1px;
+      }
+
+      .banner-image img {
+        aspect-ratio: 16 / 4;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</Layout>
