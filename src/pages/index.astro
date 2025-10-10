@@ -1,46 +1,95 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import Icon from "../components/Icon.astro";
+import Layout from '../layouts/Layout.astro';
 ---
 
-<MainLayout title="Home">
-  <div
-    class="container"
-    style={{
-      display: "grid",
-      placeItems: "center",
-      textAlign: "center",
-      gap: "var(--space-sm)",
-    }}
-  >
-    <h1 class="h1" style="color:orange">loioladev</h1>
-    <h1 class="h3">Welcome to my experimental website!</h1>
-    <p>
-      I am a Computer Scientist who loves to explore new languages and
-      frameworks! I also solve many competitive problems, and I am trying to
-      master the CSES dataset. Check out my website's CSES page for some
-      solutions!
-    </p>
-  </div>
-  <div
-    class="container"
-    style={{
-      display: "grid",
-      placeItems: "center",
-      gap: "var(--space-sm)",
-    }}
-  >
-    <h1 class="h3">Here are my socials!</h1>
-    <div style={{ display: "flex", gap: "var(--space-sm)" }}>
-      <a href="https://github.com/loioladev" style="color: inherit" target="_blank">
-        <Icon name="github" size="2x" />
-      </a>
-      <a href="https://www.linkedin.com/in/loioladev/" target="_blank">
-        <Icon name="linkedin" size="2x" />
-      </a>
-      <a href="https://codeforces.com/profile/MatheusLoiola" target="_blank" style="color: inherit">
-        <Icon name="codeforces" size="2x" />
-      </a>
+<Layout title="Home">
+  <section class="hero">
+    <div class="header">
+      <img src="/profile.jpg" alt="Profile photo" class="profile-photo" />
+      <h1 class="name">Matheus Loiola P. C. Silva</h1>
     </div>
-  </div>
-</MainLayout>
+    <div class="bio">
+      <p>
+        Currently working at <a href="#" target="_blank">Company Name</a> as a Machine Learning Engineer, 
+        focusing on healthcare technology and Python development. I work at a radiology clinic building 
+        innovative solutions that improve patient care through AI and data science. 
+        I like to solve complex problems, learn new technologies, and contribute to meaningful projects.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem 2rem 2rem;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .profile-photo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .name {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .bio {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .bio p {
+      margin: 0;
+      text-align: justify;
+    }
+
+    .bio a {
+      color: #0066cc;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .bio a:hover {
+      color: #0052a3;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 2rem 1rem;
+      }
+
+      .header {
+        gap: 0.75rem;
+      }
+
+      .profile-photo {
+        width: 36px;
+        height: 36px;
+      }
+
+      .name {
+        font-size: 1.35rem;
+      }
+
+      .bio {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</Layout>
