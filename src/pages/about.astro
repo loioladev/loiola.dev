@@ -22,11 +22,11 @@ import Layout from '../layouts/Layout.astro';
       <h2>Education</h2>
       <div class="education-item">
         <h3>Bachelor's in Computer Science</h3>
-        <p class="institution">University Name (2019 - 2023)</p>
+        <p class="institution">Instituto Federal de Brasília (2021 - 2025)</p>
         <ul>
-          <li>Focus on Machine Learning and Data Science</li>
-          <li>Relevant coursework: Deep Learning, Computer Vision, Natural Language Processing</li>
-          <li>GPA: 3.8/4.0</li>
+          <li>Teacher assistant in Competitive Programming course.</li>
+          <li>PIBIT Research for Computer Vision applications.</li>
+          <li>PIBIC Research for a competitive programming contest creation tools.</li>
         </ul>
       </div>
     </section>
@@ -35,28 +35,32 @@ import Layout from '../layouts/Layout.astro';
       <h2>Skills</h2>
       <div class="skills-grid">
         <div class="skill-category">
+          <h3>Languages</h3>
+          <p>Native Portuguese and Fluent English</p>
+        </div>
+        <div class="skill-category">
           <h3>Programming Languages</h3>
-          <p>Python, JavaScript, TypeScript, SQL, Java</p>
+          <p>Python, SQL, C++</p>
         </div>
         <div class="skill-category">
           <h3>ML/AI Technologies</h3>
-          <p>TensorFlow, PyTorch, Scikit-learn, Keras, OpenCV, NLTK</p>
+          <p>PyTorch, Scikit-learn, OpenCV</p>
         </div>
         <div class="skill-category">
           <h3>Web Technologies</h3>
-          <p>React, Node.js, Astro, FastAPI, Flask, REST APIs</p>
+          <p>Astro, Streamlit, REST APIs</p>
         </div>
         <div class="skill-category">
           <h3>Tools & Platforms</h3>
-          <p>Docker, Git, GitHub, AWS, Google Cloud, Jupyter, VS Code</p>
+          <p>Docker, Git, GitHub</p>
         </div>
         <div class="skill-category">
           <h3>Data & Databases</h3>
-          <p>PostgreSQL, MongoDB, Redis, Pandas, NumPy, Matplotlib</p>
+          <p>PostgreSQL, Pandas, NumPy, Matplotlib</p>
         </div>
         <div class="skill-category">
           <h3>Other Skills</h3>
-          <p>CI/CD, Agile/Scrum, Test-Driven Development, API Design</p>
+          <p>CI/CD, Agile/Scrum, Test-Driven Development, Design Patterns</p>
         </div>
       </div>
     </section>
@@ -66,15 +70,10 @@ import Layout from '../layouts/Layout.astro';
       <div class="contact-info">
         <div class="contact-item">
           <strong>Email:</strong> 
-          <a href="mailto:matheus@example.com">matheus@example.com</a>
+          <a href="mailto:matheusloiolapinto@gmail.com">matheusloiolapinto@gmail.com</a>
         </div>
         <div class="contact-item">
-          <strong>Location:</strong> City, Country
-        </div>
-        <div class="contact-links">
-          <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <strong>Location:</strong> Brasília, Brazil
         </div>
       </div>
     </section>
@@ -112,7 +111,7 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .about-section {
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
 
     .about-section h2 {
@@ -129,10 +128,7 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .education-item {
-      background-color: white;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      padding: 1.5rem;
+      padding: 0;
     }
 
     .education-item h3 {
@@ -166,10 +162,7 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .skill-category {
-      background-color: white;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      padding: 1.25rem;
+      padding: 0;
     }
 
     .skill-category h3 {
@@ -187,14 +180,11 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .contact-info {
-      background-color: white;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      padding: 1.5rem;
+      padding: 0;
     }
 
     .contact-item {
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       color: #333;
     }
 
@@ -211,25 +201,6 @@ import Layout from '../layouts/Layout.astro';
 
     .contact-item a:hover {
       color: #0052a3;
-      text-decoration: underline;
-    }
-
-    .contact-links {
-      display: flex;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #e5e5e5;
-    }
-
-    .contact-links a {
-      color: #666;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .contact-links a:hover {
-      color: #0066cc;
       text-decoration: underline;
     }
 
