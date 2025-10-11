@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Work Experience">
+  <div class="experience-container">
+    <a href="/" class="back-link">← Back to home</a>
+
+    <h1>Work Experience</h1>
+
+    <div class="timeline">
+      <!-- Experience Item 1 -->
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h2>Machine Learning Engineer</h2>
+          <p class="company-period">Company Name · January 2023 - Present</p>
+          <p class="description">
+            Currently developing and deploying machine learning models for healthcare applications at a 
+            radiology clinic. Building innovative AI solutions that improve patient care and diagnostic accuracy.
+          </p>
+          <p class="description">
+            Led the development of a computer vision system for medical image analysis, improving diagnostic 
+            efficiency by 40%. Implemented automated workflows using Python, TensorFlow, and FastAPI.
+          </p>
+        </div>
+      </div>
+
+      <!-- Experience Item 2 -->
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h2>Software Engineer Intern</h2>
+          <p class="company-period">Tech Company · June 2022 - December 2022</p>
+          <p class="description">
+            Developed full-stack web applications using React and Node.js. Collaborated with cross-functional 
+            teams to deliver features that improved user engagement by 25%.
+          </p>
+          <p class="description">
+            Built RESTful APIs and implemented CI/CD pipelines using GitHub Actions, reducing deployment 
+            time by 60%.
+          </p>
+        </div>
+      </div>
+
+      <!-- Experience Item 3 -->
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h2>Research Assistant</h2>
+          <p class="company-period">University Lab · January 2021 - May 2022</p>
+          <p class="description">
+            Conducted research on deep learning applications in natural language processing. Implemented 
+            and evaluated various NLP models for text classification and sentiment analysis.
+          </p>
+          <p class="description">
+            Co-authored two research papers on transformer models and attention mechanisms. Presented 
+            findings at university symposium with over 200 attendees.
+          </p>
+        </div>
+      </div>
+
+      <!-- Experience Item 4 -->
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <h2>Teaching Assistant - Data Structures</h2>
+          <p class="company-period">University · September 2020 - December 2020</p>
+          <p class="description">
+            Assisted students with understanding fundamental data structures and algorithms. Held weekly 
+            office hours and graded assignments for a class of 80 students.
+          </p>
+          <p class="description">
+            Developed tutorial materials and coding examples that improved student comprehension and 
+            course satisfaction scores by 30%.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .experience-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem 2rem 2rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      color: #666;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .back-link:hover {
+      color: #0066cc;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 3rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: #e5e5e5;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 2rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: -2.375rem;
+      top: 0.375rem;
+      width: 12px;
+      height: 12px;
+      background-color: #e5e5e5;
+      border-radius: 50%;
+      border: 2px solid #f5f5f5;
+      box-shadow: 0 0 0 2px #e5e5e5;
+    }
+
+    .timeline-content h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 0.5rem;
+    }
+
+    .company-period {
+      color: #666;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .description {
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+      text-align: justify;
+    }
+
+    .description:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      .experience-container {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+      }
+
+      .timeline {
+        padding-left: 1.5rem;
+      }
+
+      .timeline-item {
+        padding-left: 1.5rem;
+      }
+
+      .timeline-marker {
+        left: -2.125rem;
+      }
+
+      .timeline-content h2 {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</Layout>
