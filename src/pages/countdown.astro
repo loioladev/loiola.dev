@@ -1,0 +1,178 @@
+---
+// Only the countdown; no site layout/navigation
+import "/src/styles/global.css";
+
+// Target date: 2025-12-28, local midnight
+const targetISO = "2025-12-28T00:00:00";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Countdown</title>
+    <!-- Ordem Paranormal-inspired typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700..900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --op-bg-0: #050505;
+        --op-bg-1: #0a0a0a;
+        --op-bg-2: #1a0c12;
+        --op-red: #d9042b;
+        --op-red-glow: #ff2953;
+        --op-cyan: #00f5ff;
+        --op-text: #f8e9ec;
+      }
+      html, body { height: 100%; }
+      body {
+        min-height: 100vh;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          radial-gradient(ellipse 1400px 900px at 50% 35%, var(--op-bg-2) 0%, var(--op-bg-1) 50%, var(--op-bg-0) 85%),
+          radial-gradient(circle at 20% 80%, color-mix(in oklab, var(--op-red) 4%, var(--op-bg-1)), transparent 70%),
+          radial-gradient(circle at 80% 20%, color-mix(in oklab, var(--op-red) 3%, var(--op-bg-1)), transparent 60%);
+        color: var(--op-text);
+        overflow: hidden;
+        position: relative;
+        isolation: isolate;
+      }
+      /* Fog + noise + scanlines layer */
+      body::before {
+        content: "";
+        position: fixed; inset: -15%;
+        background:
+          /* enhanced drifting fog */
+          radial-gradient(45% 35% at 25% 25%, color-mix(in oklab, var(--op-red) 12%, transparent), transparent 65%),
+          radial-gradient(40% 30% at 75% 75%, color-mix(in oklab, var(--op-red) 10%, transparent), transparent 70%),
+          radial-gradient(50% 25% at 60% 40%, color-mix(in oklab, var(--op-cyan) 5%, transparent), transparent 50%),
+          /* enhanced noise texture */
+          repeating-radial-gradient(circle at 30% 70%, rgba(255,255,255,.015) 0 1px, transparent 1px 3px),
+          repeating-radial-gradient(circle at 70% 30%, rgba(255,255,255,.01) 0 0.5px, transparent 0.5px 2px),
+          /* dynamic scanlines */
+          repeating-linear-gradient(0deg, rgba(0,0,0,.4) 0 1px, transparent 1px 4px),
+          repeating-linear-gradient(90deg, rgba(0,0,0,.15) 0 1px, transparent 1px 8px);
+        filter: blur(28px) saturate(120%) brightness(0.95);
+        animation: drift 18s ease-in-out infinite alternate, pulse 4s ease-in-out infinite alternate;
+        pointer-events: none;
+        z-index: -1;
+      }
+      /* Vignette */
+      body::after {
+        content: "";
+        position: fixed; inset: 0;
+        background:
+          radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.75) 85%),
+          radial-gradient(circle at 15% 15%, color-mix(in oklab, var(--op-red) 3%, transparent), transparent 40%),
+          radial-gradient(circle at 85% 85%, color-mix(in oklab, var(--op-red) 2%, transparent), transparent 35%);
+        pointer-events: none;
+        z-index: -1;
+      }
+      @keyframes drift {
+        from { transform: translate(-3%, -2%) scale(1.01) rotate(-0.5deg); }
+        to   { transform: translate( 3%,  2%) scale(1.05) rotate(0.5deg); }
+      }
+      @keyframes pulse {
+        from { opacity: 0.8; }
+        to   { opacity: 1; }
+      }
+
+      /* Countdown styling */
+      #countdown {
+        font-family: 'Cinzel', serif;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: .14em;
+        color: var(--op-text);
+        text-shadow:
+          0 0 8px color-mix(in oklab, var(--op-red) 35%, transparent),
+          0 0 26px color-mix(in oklab, var(--op-red) 25%, transparent);
+        filter: drop-shadow(0 6px 28px color-mix(in oklab, var(--op-red) 20%, transparent));
+        position: relative;
+        font-size: calc((clamp(2.8rem, 12vw + 0.5rem, 10rem) - 20px) * 0.75);
+        line-height: 1;
+        user-select: none;
+        text-align: center;
+  display: grid;
+  place-items: center;
+  margin: 0;
+      }
+      /* Glitch chromatic aberration */
+      #countdown::before,
+      #countdown::after {
+        content: attr(data-text);
+        position: absolute; inset: 0;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+      #countdown::before {
+        color: var(--op-red-glow);
+        transform: translate(1.2px, 0);
+        opacity: .85;
+        filter: blur(.4px);
+        animation: glitch-shift 2.6s infinite steps(12);
+      }
+      #countdown::after {
+        color: var(--op-cyan);
+        transform: translate(-1.2px, 0);
+        opacity: .35;
+        filter: blur(.35px);
+        animation: glitch-shift 2.6s infinite steps(12) reverse;
+      }
+      @keyframes glitch-shift {
+        0%,100% { transform: translate(0,0); }
+        10% { transform: translate(1px, -0.5px); }
+        20% { transform: translate(-1px, 0.5px); }
+        30% { transform: translate(1.5px, 0); }
+        40% { transform: translate(-1.2px, -1px); }
+        50% { transform: translate(0.6px, 1px); }
+        60% { transform: translate(-0.8px, -1px); }
+        70% { transform: translate(1px, 0.5px); }
+        80% { transform: translate(-1px, 0); }
+        90% { transform: translate(0.5px, -0.5px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="countdown" aria-live="polite" data-text="">
+      00d 00h 00m 00s
+    </div>
+
+    <script is:inline>
+      const el = document.getElementById('countdown');
+      // Local midnight for 2025-12-28 (month is 0-based => 11 = December)
+      const target = new Date(2025, 11, 28, 0, 0, 0, 0);
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function tick() {
+        const now = new Date();
+        let diff = target.getTime() - now.getTime();
+        if (diff <= 0) {
+          const s = '00d 00h 00m 00s';
+          el.textContent = s;
+          el.dataset.text = s;
+          clearInterval(timer);
+          return;
+        }
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        const s = `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+        el.textContent = s;
+        el.dataset.text = s;
+      }
+
+      tick();
+  const timer = setInterval(tick, 1000);
+    </script>
+  </body>
+</html>
