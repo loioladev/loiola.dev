@@ -1,18 +1,235 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import Layout from '../layouts/Layout.astro';
 ---
 
-<MainLayout>
-	<div
-    class="container"
-    style={{
-      display: "grid",
-      placeItems: "center",
-      textAlign: "center",
-      gap: "var(--space-sm)",
-    }}
-  >
-  <h1 class="h1">Work in progress</h1>
-  <p>Nothing to see here yet!</p>
+<Layout title="About">
+  <div class="about-container">
+      
+      <h1>About Me</h1>
+      <div class="banner-image">
+        <img src="/banner.jpg" alt="About banner" />
+      </div>
+
+    <section class="about-section">
+      <p class="intro-text">
+        I'm Matheus Loiola, a Machine Learning Engineer with a passion for healthcare technology 
+        and building innovative solutions. I specialize in Python development, AI/ML applications, 
+        and creating systems that make a real impact on people's lives.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>Education</h2>
+      <div class="education-item">
+        <h3>Bachelor's in Computer Science</h3>
+        <p class="institution">Instituto Federal de Brasília (2021 - 2025)</p>
+        <ul>
+          <li>Teacher assistant in Competitive Programming course.</li>
+          <li>PIBIT Research for Computer Vision applications.</li>
+          <li>PIBIC Research for a competitive programming contest creation tools.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>Languages</h3>
+          <p>Native Portuguese and Fluent English</p>
+        </div>
+        <div class="skill-category">
+          <h3>Programming Languages</h3>
+          <p>Python, SQL, C++</p>
+        </div>
+        <div class="skill-category">
+          <h3>ML/AI Technologies</h3>
+          <p>PyTorch, Scikit-learn, OpenCV</p>
+        </div>
+        <div class="skill-category">
+          <h3>Web Technologies</h3>
+          <p>Astro, Streamlit, REST APIs</p>
+        </div>
+        <div class="skill-category">
+          <h3>Tools & Platforms</h3>
+          <p>Docker, Git, GitHub</p>
+        </div>
+        <div class="skill-category">
+          <h3>Data & Databases</h3>
+          <p>PostgreSQL, Pandas, NumPy, Matplotlib</p>
+        </div>
+        <div class="skill-category">
+          <h3>Other Skills</h3>
+          <p>CI/CD, Agile/Scrum, Test-Driven Development, Design Patterns</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Contact</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <strong>Email:</strong> 
+          <a href="mailto:matheusloiolapinto@gmail.com">matheusloiolapinto@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <strong>Location:</strong> Brasília, Brazil
+        </div>
+      </div>
+    </section>
   </div>
-</MainLayout>
+
+  <style>
+    .about-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem 2rem 2rem;
+    }
+
+    .banner-image {
+      width: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 1.0rem;
+      border: 2px solid #720455;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .banner-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 15 / 3;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #e8e3f0;
+      margin-bottom: 2rem;
+    }
+
+    .about-section {
+      margin-bottom: 2rem;
+    }
+
+    .about-section h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #e8e3f0;
+      margin-bottom: 1rem;
+    }
+
+    .intro-text {
+      line-height: 1.8;
+      color: #d0c9e0;
+      text-align: justify;
+    }
+
+    .education-item {
+      padding: 0;
+    }
+
+    .education-item h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #e8e3f0;
+      margin-bottom: 0.5rem;
+    }
+
+    .institution {
+      color: #b8adc8;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .education-item ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      color: #d0c9e0;
+    }
+
+    .education-item li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .skill-category {
+      padding: 0;
+    }
+
+    .skill-category h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e8e3f0;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-category p {
+      color: #b8adc8;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .contact-info {
+      padding: 0;
+    }
+
+    .contact-item {
+      margin-bottom: 0.8rem;
+      color: #d0c9e0;
+    }
+
+    .contact-item strong {
+      color: #e8e3f0;
+      margin-right: 0.5rem;
+    }
+
+    .contact-item a {
+      color: #910A67;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover {
+      color: #720455;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        padding: 1rem;
+      }
+
+      .banner-image {
+        margin-bottom: 1.5rem;
+        border-width: 1px;
+      }
+
+      .banner-image img {
+        aspect-ratio: 16 / 4;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</Layout>

@@ -1,46 +1,260 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import Icon from "../components/Icon.astro";
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get featured projects
+const featuredProjects = (await getCollection('projects'))
+  .filter(project => project.data.featured)
+  .sort((a, b) => b.data.order - a.data.order);
 ---
 
-<MainLayout title="Home">
-  <div
-    class="container"
-    style={{
-      display: "grid",
-      placeItems: "center",
-      textAlign: "center",
-      gap: "var(--space-sm)",
-    }}
-  >
-    <h1 class="h1" style="color:orange">loioladev</h1>
-    <h1 class="h3">Welcome to my experimental website!</h1>
-    <p>
-      I am a Computer Scientist who loves to explore new languages and
-      frameworks! I also solve many competitive problems, and I am trying to
-      master the CSES dataset. Check out my website's CSES page for some
-      solutions!
-    </p>
-  </div>
-  <div
-    class="container"
-    style={{
-      display: "grid",
-      placeItems: "center",
-      gap: "var(--space-sm)",
-    }}
-  >
-    <h1 class="h3">Here are my socials!</h1>
-    <div style={{ display: "flex", gap: "var(--space-sm)" }}>
-      <a href="https://github.com/loioladev" style="color: inherit" target="_blank">
-        <Icon name="github" size="2x" />
-      </a>
-      <a href="https://www.linkedin.com/in/loioladev/" target="_blank">
-        <Icon name="linkedin" size="2x" />
-      </a>
-      <a href="https://codeforces.com/profile/MatheusLoiola" target="_blank" style="color: inherit">
-        <Icon name="codeforces" size="2x" />
-      </a>
+<Layout title="Home">
+  <section class="hero">
+    <div class="header">
+      <img src="/profile.jpg" alt="Profile photo" class="profile-photo" />
+      <h1 class="name">Matheus Loiola P. C. Silva</h1>
     </div>
-  </div>
-</MainLayout>
+    <div class="bio">
+      <p>
+        Currently working at <a href="#" target="_blank" rel="noopener noreferrer">Lamas AI</a> as a Machine Learning Engineer, 
+        focusing on healthcare technology and Python development.
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured Projects Section -->
+  {featuredProjects.length > 0 && (
+    <section class="featured-section">
+      <h2>⭐ Featured Projects</h2>
+      {featuredProjects.map(async (project) => {
+        const { Content } = await project.render();
+        return (
+          <div class="project-card featured">
+            <div class="project-header">
+              <h3>{project.data.title}</h3>
+              <div class="project-links">
+                {project.data.github && (
+                  <a href={project.data.github} target="_blank" rel="noopener noreferrer">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    GitHub
+                  </a>
+                )}
+                {project.data.live && (
+                  <a href={project.data.live} target="_blank" rel="noopener noreferrer">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M6.354 5.5H4a3 3 0 000 6h3a3 3 0 002.83-4H9c-.086 0-.17.01-.25.031A2 2 0 017 10.5H4a2 2 0 110-4h1.535c.218-.376.495-.714.82-1z"/>
+                      <path d="M9 5.5a3 3 0 00-2.83 4h1.098A2 2 0 019 6.5h3a2 2 0 110 4h-1.535a4.02 4.02 0 01-.82 1H12a3 3 0 100-6H9z"/>
+                    </svg>
+                    Live Demo
+                  </a>
+                )}
+              </div>
+            </div>
+            <div class="project-description">
+              <Content />
+            </div>
+            <div class="tech-stack">
+              {project.data.tech.map((technology: string) => (
+                <span>{technology}</span>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+      <div class="view-all">
+        <a href="/projects">View all projects →</a>
+      </div>
+    </section>
+  )}
+
+  <style>
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem 2rem 2rem;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .profile-photo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .name {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #e8e3f0;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .bio {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #d0c9e0;
+    }
+
+    .bio p {
+      margin: 0;
+      text-align: justify;
+    }
+
+    .bio a {
+      color: #910A67;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .bio a:hover {
+      color: #720455;
+      text-decoration: underline;
+    }
+
+    .featured-section {
+      max-width: 800px;
+      margin: 3rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .featured-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #e8e3f0;
+    }
+
+    .project-card {
+      background-color: #1a0a2e;
+      border: 1px solid #3C0753;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 4px 12px rgba(145, 10, 103, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .project-card.featured {
+      border-left: 4px solid #910A67;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-header h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #e8e3f0;
+      margin: 0;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-links a {
+      color: #b8adc8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.3s ease;
+    }
+
+    .project-links a:hover {
+      color: #910A67;
+    }
+
+    .project-description {
+      color: #b8adc8;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .project-description :global(p) {
+      margin: 0;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-stack span {
+      background-color: #720455;
+      color: #e8e3f0;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .view-all {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .view-all a {
+      color: #b8adc8;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .view-all a:hover {
+      color: #910A67;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 2rem 1rem;
+      }
+
+      .header {
+        gap: 0.75rem;
+      }
+
+      .profile-photo {
+        width: 36px;
+        height: 36px;
+      }
+
+      .name {
+        font-size: 1.35rem;
+      }
+
+      .bio {
+        font-size: 0.95rem;
+      }
+
+      .featured-section {
+        padding: 0 1rem;
+      }
+
+      .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</Layout>

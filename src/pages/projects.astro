@@ -1,0 +1,399 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get all projects and sort by order
+const allProjects = (await getCollection('projects')).sort((a, b) => b.data.order - a.data.order);
+
+// Separate featured and other projects
+const featuredProjects = allProjects.filter(project => project.data.featured);
+const otherProjects = allProjects.filter(project => !project.data.featured);
+
+// Get all unique technologies
+const allTechnologies = new Set<string>();
+allProjects.forEach(project => {
+  project.data.tech.forEach(tech => allTechnologies.add(tech));
+});
+const technologies = Array.from(allTechnologies).sort();
+---
+
+<Layout title="Projects">
+  <div class="projects-container">
+    <h1>Projects</h1>
+
+    
+    {featuredProjects.length > 0 && (
+      <section class="projects-section">
+        <h2>⭐ Featured Projects</h2>
+        
+        {featuredProjects.map(async (project) => {
+          const { Content } = await project.render();
+          return (
+            <div class="project-card featured" data-techs={project.data.tech.join(',')}>
+              <div class="project-header">
+                <h3>{project.data.title}</h3>
+                <div class="project-links">
+                  {project.data.github && (
+                    <a href={project.data.github} target="_blank" rel="noopener noreferrer">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                      </svg>
+                      GitHub
+                    </a>
+                  )}
+                  {project.data.live && (
+                    <a href={project.data.live} target="_blank" rel="noopener noreferrer">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M6.354 5.5H4a3 3 0 000 6h3a3 3 0 002.83-4H9c-.086 0-.17.01-.25.031A2 2 0 017 10.5H4a2 2 0 110-4h1.535c.218-.376.495-.714.82-1z"/>
+                        <path d="M9 5.5a3 3 0 00-2.83 4h1.098A2 2 0 019 6.5h3a2 2 0 110 4h-1.535a4.02 4.02 0 01-.82 1H12a3 3 0 100-6H9z"/>
+                      </svg>
+                      Live Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div class="project-description">
+                <Content />
+              </div>
+              <div class="tech-stack">
+                {project.data.tech.map((technology: string) => (
+                  <span>{technology}</span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </section>
+    )}
+
+    <!-- Tech Filter -->
+    <div class="filter-section">
+      <div class="filter-header">
+        <span class="filter-label">Filter by technology:</span>
+        <button class="clear-filter" id="clearFilter" style="display: none;">Clear filter</button>
+      </div>
+      <div class="tech-filters">
+        {technologies.map((tech) => (
+          <button class="tech-filter" data-tech={tech}>
+            {tech}
+          </button>
+        ))}
+      </div>
+    </div>
+{otherProjects.length > 0 && (
+      <section class="projects-section">
+        <h2>Other Projects</h2>
+
+        {otherProjects.map(async (project) => {
+          const { Content } = await project.render();
+          return (
+            <div class="project-card" data-techs={project.data.tech.join(',')}>
+              <div class="project-header">
+                <h3>{project.data.title}</h3>
+                <div class="project-links">
+                  {project.data.github && (
+                    <a href={project.data.github} target="_blank" rel="noopener noreferrer">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                      </svg>
+                      GitHub
+                    </a>
+                  )}
+                  {project.data.live && (
+                    <a href={project.data.live} target="_blank" rel="noopener noreferrer">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M6.354 5.5H4a3 3 0 000 6h3a3 3 0 002.83-4H9c-.086 0-.17.01-.25.031A2 2 0 017 10.5H4a2 2 0 110-4h1.535c.218-.376.495-.714.82-1z"/>
+                        <path d="M9 5.5a3 3 0 00-2.83 4h1.098A2 2 0 019 6.5h3a2 2 0 110 4h-1.535a4.02 4.02 0 01-.82 1H12a3 3 0 100-6H9z"/>
+                      </svg>
+                      Live Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div class="project-description">
+                <Content />
+              </div>
+              <div class="tech-stack">
+                {project.data.tech.map((technology: string) => (
+                  <span>{technology}</span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </section>
+    )}
+  </div>
+
+  <style>
+    .projects-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem 2rem 2rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      color: #b8adc8;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .back-link:hover {
+      color: #910A67;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #e8e3f0;
+      margin-bottom: 3rem;
+    }
+
+    .projects-section {
+      margin-bottom: 3rem;
+    }
+
+    .projects-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .projects-section h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #e8e3f0;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-card {
+      background-color: #1a0a2e;
+      border: 1px solid #3C0753;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 4px 12px rgba(145, 10, 103, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .project-card.featured {
+      border-left: 4px solid #910A67;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .project-header h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #e8e3f0;
+      margin: 0;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-links a {
+      color: #b8adc8;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.3s ease;
+    }
+
+    .project-links a:hover {
+      color: #910A67;
+    }
+
+    .project-description {
+      color: #b8adc8;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .project-description :global(p) {
+      margin: 0;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-stack span {
+      background-color: #720455;
+      color: #e8e3f0;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .projects-container {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+      }
+
+      .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .project-links {
+        width: 100%;
+      }
+    }
+
+    .filter-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background-color: #1a0a2e;
+      border: 1px solid #3C0753;
+      border-radius: 8px;
+    }
+
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .filter-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e8e3f0;
+    }
+
+    .clear-filter {
+      background: none;
+      border: none;
+      color: #910A67;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .clear-filter:hover {
+      color: #720455;
+      text-decoration: underline;
+    }
+
+    .tech-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-filter {
+      background-color: #720455;
+      color: #e8e3f0;
+      border: 2px solid transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tech-filter:hover {
+      background-color: #910A67;
+    }
+
+    .tech-filter.active {
+      background-color: #910A67;
+      color: #e8e3f0;
+      border-color: #910A67;
+    }
+
+    .project-card.hidden {
+      display: none;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const techFilters = document.querySelectorAll('.tech-filter');
+      const clearFilterBtn = document.getElementById('clearFilter');
+      const projectCards = document.querySelectorAll('.project-card');
+      let activeFilter: string | null = null;
+
+      function filterProjects(tech: string | null) {
+        projectCards.forEach((card) => {
+          const cardTechs = (card as HTMLElement).dataset.techs?.split(',') || [];
+          
+          if (!tech || cardTechs.includes(tech)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        // Update filter button states
+        techFilters.forEach((btn) => {
+          if ((btn as HTMLElement).dataset.tech === tech) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        // Show/hide clear button
+        if (clearFilterBtn) {
+          if (tech) {
+            (clearFilterBtn as HTMLElement).style.display = 'block';
+          } else {
+            (clearFilterBtn as HTMLElement).style.display = 'none';
+          }
+        }
+      }
+
+      // Tech filter click handlers
+      techFilters.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const tech = (btn as HTMLElement).dataset.tech || null;
+          
+          if (activeFilter === tech) {
+            // Clicking the same filter again clears it
+            activeFilter = null;
+            filterProjects(null);
+          } else {
+            activeFilter = tech;
+            filterProjects(tech);
+          }
+        });
+      });
+
+      // Clear filter button
+      if (clearFilterBtn) {
+        clearFilterBtn.addEventListener('click', () => {
+          activeFilter = null;
+          filterProjects(null);
+        });
+      }
+    });
+  </script>
+</Layout>

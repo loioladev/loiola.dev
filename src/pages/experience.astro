@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get all experience entries and sort by order
+const experiences = (await getCollection('experience')).sort((a, b) => b.data.order - a.data.order);
+---
+
+<Layout title="Work Experience">
+  <div class="experience-container">
+
+    <h1>Work Experience</h1>
+
+    <div class="timeline">
+      {experiences.map(async (experience) => {
+        const { Content } = await experience.render();
+        return (
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h2>{experience.data.title}</h2>
+              <p class="company-period">{experience.data.company} · {experience.data.period}</p>
+              <div class="description">
+                <Content />
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  <style>
+    .experience-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem 2rem 2rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      color: #b8adc8;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .back-link:hover {
+      color: #910A67;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #e8e3f0;
+      margin-bottom: 3rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: #3C0753;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 2rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: -2.375rem;
+      top: 0.375rem;
+      width: 12px;
+      height: 12px;
+      background-color: #3C0753;
+      border-radius: 50%;
+      border: 2px solid #0a0118;
+      box-shadow: 0 0 0 2px #3C0753;
+    }
+
+    .timeline-content h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #e8e3f0;
+      margin-bottom: 0.5rem;
+    }
+
+    .company-period {
+      color: #b8adc8;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .description {
+      color: #d0c9e0;
+      line-height: 1.7;
+      text-align: justify;
+    }
+
+    .description :global(p) {
+      margin-bottom: 0.75rem;
+    }
+
+    .description :global(p:last-child) {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 768px) {
+      .experience-container {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+      }
+
+      .timeline {
+        padding-left: 1.5rem;
+      }
+
+      .timeline-item {
+        padding-left: 1.5rem;
+      }
+
+      .timeline-marker {
+        left: -2.125rem;
+      }
+
+      .timeline-content h2 {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</Layout>
