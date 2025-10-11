@@ -1,5 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get featured projects
+const featuredProjects = (await getCollection('projects'))
+  .filter(project => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout title="Home">
@@ -10,13 +16,44 @@ import Layout from '../layouts/Layout.astro';
     </div>
     <div class="bio">
       <p>
-        Currently working at <a href="#" target="_blank">Company Name</a> as a Machine Learning Engineer, 
+        Currently working at <a href="#" target="_blank" rel="noopener noreferrer">Company Name</a> as a Machine Learning Engineer, 
         focusing on healthcare technology and Python development. I work at a radiology clinic building 
         innovative solutions that improve patient care through AI and data science. 
         I like to solve complex problems, learn new technologies, and contribute to meaningful projects.
       </p>
     </div>
   </section>
+
+  <!-- Featured Projects Section -->
+  {featuredProjects.length > 0 && (
+    <section class="featured-section">
+      <h2>Featured Projects</h2>
+      {featuredProjects.map(async (project) => {
+        const { Content } = await project.render();
+        return (
+          <div class="project-card">
+            <div class="project-header">
+              <h3>{project.data.title}</h3>
+              <div class="project-links">
+                {project.data.github && (
+                  <a href={project.data.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                )}
+                {project.data.live && (
+                  <a href={project.data.live} target="_blank" rel="noopener noreferrer">Live Demo</a>
+                )}
+              </div>
+            </div>
+            <div class="project-description">
+              <Content />
+            </div>
+          </div>
+        );
+      })}
+      <div class="view-all">
+        <a href="/projects">View all projects →</a>
+      </div>
+    </section>
+  )}
 
   <style>
     .hero {
@@ -69,6 +106,86 @@ import Layout from '../layouts/Layout.astro';
       text-decoration: underline;
     }
 
+    .featured-section {
+      max-width: 800px;
+      margin: 3rem auto 0;
+      padding: 0 2rem;
+    }
+
+    .featured-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #1a1a1a;
+    }
+
+    .project-card {
+      background-color: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-header h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 0;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .project-links a:hover {
+      color: #0066cc;
+    }
+
+    .project-description {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .project-description :global(p) {
+      margin: 0;
+    }
+
+    .view-all {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .view-all a {
+      color: #666;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .view-all a:hover {
+      color: #0066cc;
+    }
+
     @media (max-width: 768px) {
       .hero {
         padding: 2rem 1rem;
@@ -89,6 +206,16 @@ import Layout from '../layouts/Layout.astro';
 
       .bio {
         font-size: 0.95rem;
+      }
+
+      .featured-section {
+        padding: 0 1rem;
+      }
+
+      .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
       }
     }
   </style>
