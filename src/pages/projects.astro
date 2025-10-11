@@ -3,19 +3,25 @@ import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 // Get all projects and sort by order
-const allProjects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const allProjects = (await getCollection('projects')).sort((a, b) => b.data.order - a.data.order);
 
 // Separate featured and other projects
 const featuredProjects = allProjects.filter(project => project.data.featured);
 const otherProjects = allProjects.filter(project => !project.data.featured);
+
+// Get all unique technologies
+const allTechnologies = new Set<string>();
+allProjects.forEach(project => {
+  project.data.tech.forEach(tech => allTechnologies.add(tech));
+});
+const technologies = Array.from(allTechnologies).sort();
 ---
 
 <Layout title="Projects">
   <div class="projects-container">
-    <a href="/" class="back-link">← Back to home</a>
-
     <h1>Projects</h1>
 
+    
     {featuredProjects.length > 0 && (
       <section class="projects-section">
         <h2>⭐ Featured Projects</h2>
@@ -23,7 +29,7 @@ const otherProjects = allProjects.filter(project => !project.data.featured);
         {featuredProjects.map(async (project) => {
           const { Content } = await project.render();
           return (
-            <div class="project-card featured">
+            <div class="project-card featured" data-techs={project.data.tech.join(',')}>
               <div class="project-header">
                 <h3>{project.data.title}</h3>
                 <div class="project-links">
@@ -60,14 +66,28 @@ const otherProjects = allProjects.filter(project => !project.data.featured);
       </section>
     )}
 
-    {otherProjects.length > 0 && (
+    <!-- Tech Filter -->
+    <div class="filter-section">
+      <div class="filter-header">
+        <span class="filter-label">Filter by technology:</span>
+        <button class="clear-filter" id="clearFilter" style="display: none;">Clear filter</button>
+      </div>
+      <div class="tech-filters">
+        {technologies.map((tech) => (
+          <button class="tech-filter" data-tech={tech}>
+            {tech}
+          </button>
+        ))}
+      </div>
+    </div>
+{otherProjects.length > 0 && (
       <section class="projects-section">
         <h2>Other Projects</h2>
 
         {otherProjects.map(async (project) => {
           const { Content } = await project.render();
           return (
-            <div class="project-card">
+            <div class="project-card" data-techs={project.data.tech.join(',')}>
               <div class="project-header">
                 <h3>{project.data.title}</h3>
                 <div class="project-links">
@@ -244,5 +264,136 @@ const otherProjects = allProjects.filter(project => !project.data.featured);
         width: 100%;
       }
     }
+
+    .filter-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background-color: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+    }
+
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .filter-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .clear-filter {
+      background: none;
+      border: none;
+      color: #0066cc;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .clear-filter:hover {
+      color: #0052a3;
+      text-decoration: underline;
+    }
+
+    .tech-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-filter {
+      background-color: #f0f0f0;
+      color: #333;
+      border: 2px solid transparent;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tech-filter:hover {
+      background-color: #e0e0e0;
+    }
+
+    .tech-filter.active {
+      background-color: #0066cc;
+      color: white;
+      border-color: #0066cc;
+    }
+
+    .project-card.hidden {
+      display: none;
+    }
   </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const techFilters = document.querySelectorAll('.tech-filter');
+      const clearFilterBtn = document.getElementById('clearFilter');
+      const projectCards = document.querySelectorAll('.project-card');
+      let activeFilter: string | null = null;
+
+      function filterProjects(tech: string | null) {
+        projectCards.forEach((card) => {
+          const cardTechs = (card as HTMLElement).dataset.techs?.split(',') || [];
+          
+          if (!tech || cardTechs.includes(tech)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        // Update filter button states
+        techFilters.forEach((btn) => {
+          if ((btn as HTMLElement).dataset.tech === tech) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        // Show/hide clear button
+        if (clearFilterBtn) {
+          if (tech) {
+            (clearFilterBtn as HTMLElement).style.display = 'block';
+          } else {
+            (clearFilterBtn as HTMLElement).style.display = 'none';
+          }
+        }
+      }
+
+      // Tech filter click handlers
+      techFilters.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const tech = (btn as HTMLElement).dataset.tech || null;
+          
+          if (activeFilter === tech) {
+            // Clicking the same filter again clears it
+            activeFilter = null;
+            filterProjects(null);
+          } else {
+            activeFilter = tech;
+            filterProjects(tech);
+          }
+        });
+      });
+
+      // Clear filter button
+      if (clearFilterBtn) {
+        clearFilterBtn.addEventListener('click', () => {
+          activeFilter = null;
+          filterProjects(null);
+        });
+      }
+    });
+  </script>
 </Layout>

@@ -27,7 +27,7 @@ const featuredProjects = (await getCollection('projects'))
   <!-- Featured Projects Section -->
   {featuredProjects.length > 0 && (
     <section class="featured-section">
-      <h2>Featured Projects</h2>
+      <h2>⭐ Featured Projects</h2>
       {featuredProjects.map(async (project) => {
         const { Content } = await project.render();
         return (
