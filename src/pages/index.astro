@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 // Get featured projects
 const featuredProjects = (await getCollection('projects'))
   .filter(project => project.data.featured)
-  .sort((a, b) => a.data.order - b.data.order);
+  .sort((a, b) => b.data.order - a.data.order);
 ---
 
 <Layout title="Home">
@@ -16,10 +16,8 @@ const featuredProjects = (await getCollection('projects'))
     </div>
     <div class="bio">
       <p>
-        Currently working at <a href="#" target="_blank" rel="noopener noreferrer">Company Name</a> as a Machine Learning Engineer, 
-        focusing on healthcare technology and Python development. I work at a radiology clinic building 
-        innovative solutions that improve patient care through AI and data science. 
-        I like to solve complex problems, learn new technologies, and contribute to meaningful projects.
+        Currently working at <a href="#" target="_blank" rel="noopener noreferrer">Lamas AI</a> as a Machine Learning Engineer, 
+        focusing on healthcare technology and Python development.
       </p>
     </div>
   </section>
@@ -31,20 +29,36 @@ const featuredProjects = (await getCollection('projects'))
       {featuredProjects.map(async (project) => {
         const { Content } = await project.render();
         return (
-          <div class="project-card">
+          <div class="project-card featured">
             <div class="project-header">
               <h3>{project.data.title}</h3>
               <div class="project-links">
                 {project.data.github && (
-                  <a href={project.data.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                  <a href={project.data.github} target="_blank" rel="noopener noreferrer">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    GitHub
+                  </a>
                 )}
                 {project.data.live && (
-                  <a href={project.data.live} target="_blank" rel="noopener noreferrer">Live Demo</a>
+                  <a href={project.data.live} target="_blank" rel="noopener noreferrer">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                      <path d="M6.354 5.5H4a3 3 0 000 6h3a3 3 0 002.83-4H9c-.086 0-.17.01-.25.031A2 2 0 017 10.5H4a2 2 0 110-4h1.535c.218-.376.495-.714.82-1z"/>
+                      <path d="M9 5.5a3 3 0 00-2.83 4h1.098A2 2 0 019 6.5h3a2 2 0 110 4h-1.535a4.02 4.02 0 01-.82 1H12a3 3 0 100-6H9z"/>
+                    </svg>
+                    Live Demo
+                  </a>
                 )}
               </div>
             </div>
             <div class="project-description">
               <Content />
+            </div>
+            <div class="tech-stack">
+              {project.data.tech.map((technology: string) => (
+                <span>{technology}</span>
+              ))}
             </div>
           </div>
         );
@@ -124,12 +138,17 @@ const featuredProjects = (await getCollection('projects'))
       border: 1px solid #e5e5e5;
       border-radius: 8px;
       padding: 1.5rem;
-      margin-bottom: 1rem;
-      transition: box-shadow 0.3s ease;
+      margin-bottom: 1.5rem;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
 
     .project-card:hover {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .project-card.featured {
+      border-left: 4px solid #0066cc;
     }
 
     .project-header {
@@ -140,7 +159,7 @@ const featuredProjects = (await getCollection('projects'))
     }
 
     .project-header h3 {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 600;
       color: #1a1a1a;
       margin: 0;
@@ -155,6 +174,9 @@ const featuredProjects = (await getCollection('projects'))
       color: #666;
       text-decoration: none;
       font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
       transition: color 0.3s ease;
     }
 
@@ -165,10 +187,26 @@ const featuredProjects = (await getCollection('projects'))
     .project-description {
       color: #666;
       line-height: 1.6;
+      margin-bottom: 1rem;
     }
 
     .project-description :global(p) {
       margin: 0;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-stack span {
+      background-color: #f0f0f0;
+      color: #333;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 500;
     }
 
     .view-all {
