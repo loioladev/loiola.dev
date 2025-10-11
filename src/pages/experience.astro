@@ -1,81 +1,32 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get all experience entries and sort by order
+const experiences = (await getCollection('experience')).sort((a, b) => b.data.order - a.data.order);
 ---
 
 <Layout title="Work Experience">
   <div class="experience-container">
-    <a href="/" class="back-link">← Back to home</a>
 
     <h1>Work Experience</h1>
 
     <div class="timeline">
-      <!-- Experience Item 1 -->
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>Machine Learning Engineer</h2>
-          <p class="company-period">Company Name · January 2023 - Present</p>
-          <p class="description">
-            Currently developing and deploying machine learning models for healthcare applications at a 
-            radiology clinic. Building innovative AI solutions that improve patient care and diagnostic accuracy.
-          </p>
-          <p class="description">
-            Led the development of a computer vision system for medical image analysis, improving diagnostic 
-            efficiency by 40%. Implemented automated workflows using Python, TensorFlow, and FastAPI.
-          </p>
-        </div>
-      </div>
-
-      <!-- Experience Item 2 -->
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>Software Engineer Intern</h2>
-          <p class="company-period">Tech Company · June 2022 - December 2022</p>
-          <p class="description">
-            Developed full-stack web applications using React and Node.js. Collaborated with cross-functional 
-            teams to deliver features that improved user engagement by 25%.
-          </p>
-          <p class="description">
-            Built RESTful APIs and implemented CI/CD pipelines using GitHub Actions, reducing deployment 
-            time by 60%.
-          </p>
-        </div>
-      </div>
-
-      <!-- Experience Item 3 -->
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>Research Assistant</h2>
-          <p class="company-period">University Lab · January 2021 - May 2022</p>
-          <p class="description">
-            Conducted research on deep learning applications in natural language processing. Implemented 
-            and evaluated various NLP models for text classification and sentiment analysis.
-          </p>
-          <p class="description">
-            Co-authored two research papers on transformer models and attention mechanisms. Presented 
-            findings at university symposium with over 200 attendees.
-          </p>
-        </div>
-      </div>
-
-      <!-- Experience Item 4 -->
-      <div class="timeline-item">
-        <div class="timeline-marker"></div>
-        <div class="timeline-content">
-          <h2>Teaching Assistant - Data Structures</h2>
-          <p class="company-period">University · September 2020 - December 2020</p>
-          <p class="description">
-            Assisted students with understanding fundamental data structures and algorithms. Held weekly 
-            office hours and graded assignments for a class of 80 students.
-          </p>
-          <p class="description">
-            Developed tutorial materials and coding examples that improved student comprehension and 
-            course satisfaction scores by 30%.
-          </p>
-        </div>
-      </div>
+      {experiences.map(async (experience) => {
+        const { Content } = await experience.render();
+        return (
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h2>{experience.data.title}</h2>
+              <p class="company-period">{experience.data.company} · {experience.data.period}</p>
+              <div class="description">
+                <Content />
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   </div>
 
@@ -160,11 +111,14 @@ import Layout from '../layouts/Layout.astro';
     .description {
       color: #333;
       line-height: 1.7;
-      margin-bottom: 0.75rem;
       text-align: justify;
     }
 
-    .description:last-child {
+    .description :global(p) {
+      margin-bottom: 0.75rem;
+    }
+
+    .description :global(p:last-child) {
       margin-bottom: 0;
     }
 
